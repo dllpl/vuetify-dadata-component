@@ -1,47 +1,55 @@
 <template>
   <v-app>
-    <v-app-bar
-        app
-        color="primary"
-        dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-            alt="Vuetify Logo"
-            class="shrink mr-2"
-            contain
-            src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-            transition="scale-transition"
-            width="40"
-        />
-
-        <v-img
-            alt="Vuetify Name"
-            class="shrink mt-1 hidden-sm-and-down"
-            contain
-            min-width="100"
-            src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-            width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-          href="https://github.com/dllpl"
-          target="_blank"
-          text
-      >
-        <span class="mr-2">Автор @dllpl</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+    <Header/>
     <v-main>
       <v-container>
         <v-row class="mt-6" justify="center" cols="12">
           <v-col md="6" sm="12">
-            <div class="mb-3">Компонент для работы с Dadata.ru</div>
-            <DadataHints/>
+            <v-card>
+              <v-card-title class="font-weight-bold">Компонент Vuetify для работы с сервисом подсказок</v-card-title>
+              <v-card-subtitle><a href="https://dadata.ru" target="_blank">Dadata.ru</a></v-card-subtitle>
+              <v-card-text>
+                <v-divider class="mb-3"></v-divider>
+                <div>Вариант поиска:</div>
+                <v-radio-group
+                    v-model="type"
+                    row
+                >
+                  <v-radio v-for="option in searchOptions"
+                           :label=option.label
+                           :value=option.type
+                           v-model="option.type"
+                  ></v-radio>
+                </v-radio-group>
+                <div>Колличество выводимых подсказок:</div>
+                <v-slider
+                    v-model="count"
+                    thumb-label
+                    max="20"
+                >
+                  <template v-slot:append>
+                    <v-text-field
+                        v-model="count"
+                        class="mt-0 pt-0"
+                        hide-details
+                        single-line
+                        type="number"
+                        style="width: 60px"
+                    ></v-text-field>
+                  </template>
+                </v-slider>
+                <DadataHints
+                    :type="type"
+                    :label="label"
+                    :count="count"
+                />
+              </v-card-text>
+            </v-card>
+<!--            <v-card class="mt-6">-->
+<!--              <v-card-text>-->
+<!--                {{json}}-->
+<!--              </v-card-text>-->
+<!--            </v-card>-->
           </v-col>
         </v-row>
       </v-container>
@@ -52,16 +60,66 @@
 <script>
 
 import DadataHints from "./components/DadataHints";
+import Header from "./components/Header";
 
 export default {
   name: 'App',
-
-  components: {
-    DadataHints
+  components: {Header, DadataHints},
+  data() {
+    return {
+      type: 'address',
+      label: 'Адрес',
+      count: 10,
+      searchOptions: [
+        {
+          label: 'Адрес',
+          type: 'address',
+        },
+        {
+          label: 'ФИО',
+          type: 'fio',
+        },
+        {
+          label: 'Организация',
+          type: 'party',
+        },
+        {
+          label: 'Банк',
+          type: 'bank',
+        },
+        {
+          label: 'Email',
+          type: 'email',
+        },
+      ],
+      json: {},
+    }
   },
-
-  data: () => ({
-    //
-  }),
+  watch: {
+    type(type) {
+      switch (type) {
+        case 'address':
+          this.label = 'Адрес'
+          break
+        case 'fio':
+          this.label = 'ФИО'
+          break
+        case 'party':
+          this.label = 'Организация'
+          break
+        case 'bank':
+          this.label = 'Банк'
+          break
+        case 'email':
+          this.label = 'Email'
+          break
+      }
+    }
+  },
+  methods: {
+    setDataJson(json) {
+      this.json = JSON.stringify(json)
+    }
+  }
 };
 </script>
