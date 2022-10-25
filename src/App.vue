@@ -42,14 +42,13 @@
                     :type="type"
                     :label="label"
                     :count="count"
+                    @setDataJson="setDataJson"
                 />
               </v-card-text>
             </v-card>
-<!--            <v-card class="mt-6">-->
-<!--              <v-card-text>-->
-<!--                {{json}}-->
-<!--              </v-card-text>-->
-<!--            </v-card>-->
+            <v-card class="mt-6">
+              <v-card-text><pre>{{ json }}</pre></v-card-text>
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
@@ -118,7 +117,7 @@ export default {
   },
   methods: {
     setDataJson(json) {
-      this.json = JSON.stringify(json)
+      this.json = JSON.stringify(json, null, '\t')
     }
   }
 };

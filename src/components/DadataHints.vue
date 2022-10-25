@@ -37,7 +37,6 @@ export default {
       axios.post(`https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/${this.type}`, payload, this.config)
           .then(({data}) => {
             this.items = data.suggestions
-            // this.$emit('setDataJson', data)
           })
     },
   },
@@ -50,6 +49,11 @@ export default {
       }
     }
   },
+  watch: {
+    searchText: function (val) {
+      this.$emit('setDataJson', val)
+    }
+  }
 }
 </script>
 
