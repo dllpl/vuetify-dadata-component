@@ -2,6 +2,7 @@
 <em>Автор: Никита Ив <a href='https://github.com/dllpl/'>@dllpl</a></em>
 <hr>
 <p>
+    <a href="https://dllpl.github.io/vuetify-dadata-component/">Демо</a> <br>
     Компонент Vuetify для работы с сервисом подсказок <a href='https://dadata.ru/' target="_blank">Dadata.ru</a>. <br>
     В качестве текстового поля для ввода и вывода подсказок был использован UI компонент v-combobox.
 </p>    
