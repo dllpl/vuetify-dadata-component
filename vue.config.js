@@ -7,5 +7,6 @@ module.exports = {
       entry: 'src/main.js',
       title: 'vuetify-dadata-component',
     }
-  }
+  },
+  publicPath:'/vuetify-dadata-component/'
 }
