@@ -16,12 +16,13 @@
                     row
                 >
                   <v-radio v-for="option in searchOptions"
+                           :key="option.id"
                            :label=option.label
                            :value=option.type
                            v-model="option.type"
                   ></v-radio>
                 </v-radio-group>
-                <div>Колличество выводимых подсказок:</div>
+                <div>Количество выводимых подсказок:</div>
                 <v-slider
                     v-model="count"
                     thumb-label
@@ -46,9 +47,7 @@
                 />
               </v-card-text>
             </v-card>
-            <v-card class="mt-6">
-              <v-card-text><pre>{{ json }}</pre></v-card-text>
-            </v-card>
+            <DadataView :json="json"/>
           </v-col>
         </v-row>
       </v-container>
@@ -58,17 +57,15 @@
 
 <script>
 
-import DadataHints from "./components/DadataHints";
-import Header from "./components/Header";
+import Header from "./components/Header"
+import DadataHints from "./components/DadataHints"
+import DadataView from "./components/DadataView"
 
 export default {
   name: 'App',
-  components: {Header, DadataHints},
+  components: {DadataView, Header, DadataHints},
   data() {
     return {
-      type: 'address',
-      label: 'Адрес',
-      count: 10,
       searchOptions: [
         {
           label: 'Адрес',
@@ -91,7 +88,10 @@ export default {
           type: 'email',
         },
       ],
-      json: {},
+      type: 'address',
+      label: 'Адрес',
+      count: 10,
+      json: '',
     }
   },
   watch: {
@@ -117,8 +117,9 @@ export default {
   },
   methods: {
     setDataJson(json) {
-      this.json = JSON.stringify(json, null, '\t')
-    }
+      console.log(json)
+      json ? this.json = JSON.stringify(json, null, '\t') : this.json = json
+    },
   }
 };
 </script>

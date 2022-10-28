@@ -2,6 +2,7 @@
   <v-combobox
       v-model="searchText"
       @keyup="send($event.target.value)"
+      @change="$emit('setDataJson', searchText)"
       :label="label"
       :items="items"
       item-text="value"
@@ -19,7 +20,7 @@ export default {
     type: {type: String, default: 'address'},
     label: {type: String, default: 'Адрес'},
     count: {type: Number, default: 10},
-    token: {type: String}
+    token: {type: String},
   },
   data() {
     return {
@@ -49,11 +50,11 @@ export default {
       }
     }
   },
-  watch: {
-    searchText: function (val) {
-      this.$emit('setDataJson', val)
-    }
-  }
+  // watch: {
+  //   searchText: function (val) {
+  //     this.$emit('setDataJson', val)
+  //   }
+  // }
 }
 </script>
 
